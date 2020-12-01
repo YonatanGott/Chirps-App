@@ -1,0 +1,25 @@
+.chirp {
+  background-color: #fcee09;
+  width: 600px;
+  height: 100px;
+  font-size: 1rem;
+  font-weight: 300;
+  clip-path: polygon(0 0, 97% 0, 100% 14%, 100% 80%, 100% 99%, 3% 100%, 0 84%, 0% 20%);
+} 
+
+.chirp-head {
+  display: flex;
+  justify-content: space-between;
+}
+.chirp-text{
+    font-size: 1.2rem;
+    font-weight: 400;
+}
+.row{
+    margin-bottom: 0.5rem;
+    margin-left: 0;
+}
+.col-lg{
+    flex-basis: auto;
+    flex-grow: unset;
+}
