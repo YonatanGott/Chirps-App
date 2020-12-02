@@ -9,7 +9,10 @@
   font-size: 1.2rem;
   font-weight: 400;
   color:#00f0ff;
- 
+}
+textarea::placeholder, .form-control::-webkit-input-placeholder  {
+  color: #00f0ff; 
+  opacity: 0.5; 
 }
 .form-footer {
   display: flex;

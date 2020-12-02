@@ -4,12 +4,21 @@ import "./ChirpList.css";
 import { ChirpContext } from '../contexts/ChirpContext';
 
 const ChirpList = () => {
-    const { chirps } = useContext(ChirpContext);
+    const { chirps, loader } = useContext(ChirpContext);
     return (
         <div className="chirp-list">
             {chirps.map((chirp) => {
                 return <Chirp chirp={chirp} key={chirp.id} />;
             })}
+            <div className="loader">
+                {loader ? (
+                    <span className="loader-content">
+                        Loading_
+                    </span>
+                ) : (
+                        ""
+                    )}
+            </div>
         </div>
     )
 };

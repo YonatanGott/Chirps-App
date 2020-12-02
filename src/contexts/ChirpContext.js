@@ -1,26 +1,24 @@
 import React, { createContext, useState, useEffect } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { getChirps } from '../lib/api';
 
 export const ChirpContext = createContext();
 
 const ChirpContextProvider = (props) => {
-    const [chirps, setChirps] = useState(() => {
-        const localData = localStorage.getItem('chirps');
-        return localData ? JSON.parse(localData) : [];
-    });
-
-    const addChirp = (text) => {
-        setChirps([
-            { text, user: 'Yonatan', date: new Date().toISOString(), id: uuidv4() }, ...chirps,
-        ]);
-    };
+    const [chirps, setChirps] = useState([]);
+    const [loader, setLoader] = useState(false);
 
     useEffect(() => {
-        localStorage.setItem('chirps', JSON.stringify(chirps));
-    }, [chirps]);
+        (async () => {
+            setLoader(true);
+            const response = await getChirps();
+            const chirps = await response.data.tweets;
+            setChirps (chirps);
+            setLoader(false);
+        })()
+    }, []);
 
     return (
-        <ChirpContext.Provider value={{ chirps, addChirp }}>
+        <ChirpContext.Provider value={{ chirps,loader }}>
             {props.children}
         </ChirpContext.Provider>
     );
