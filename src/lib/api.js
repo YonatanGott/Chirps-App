@@ -7,5 +7,10 @@ export function getChirps() {
 }
 
 export function postChirp(chirp) {
-    return axios.post(baseUrl,{chirp});
+    return axios.post(baseUrl, {
+        content: chirp.content,
+        userName: chirp.userName,
+        date: chirp.date,
+        id: chirp.id,
+    });
 }
