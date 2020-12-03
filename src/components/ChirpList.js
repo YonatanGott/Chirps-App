@@ -10,11 +10,13 @@ const ChirpList = () => {
             {chirps.map((chirp) => {
                 return <Chirp chirp={chirp} key={chirp.id} />;
             })}
-            <div className="loader">
+            <div>
                 {loader ? (
-                    <span className="loader-content">
-                        Loading_
-                    </span>
+                    <div className="loader">
+                        <span className="loader-content">
+                            Loading_
+                        </span>
+                    </div>
                 ) : (
                         ""
                     )}

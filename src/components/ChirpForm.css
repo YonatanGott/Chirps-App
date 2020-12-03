@@ -19,8 +19,8 @@ textarea::placeholder, .form-control::-webkit-input-placeholder  {
   justify-content: space-between;
 }
 .btn {
-  width: 68px;
-  height: 34px;
+  width: 88px;
+  height: 44px;
   position: relative;
   border: 0;
   outline: none;
@@ -32,6 +32,15 @@ textarea::placeholder, .form-control::-webkit-input-placeholder  {
   clip-path: polygon(92% 0, 100% 25%, 100% 100%, 8% 100%, 0% 75%, 0 0);
 }
 
+.btn__content:hover{
+  background-color: #00f0ff;
+  animation: glitch-animation 2s linear 0s infinite;
+
+}
+.btn:disabled{
+  cursor: default;
+  animation: none;
+}
 .btn__content {
   display: flex;
   align-items: center;
