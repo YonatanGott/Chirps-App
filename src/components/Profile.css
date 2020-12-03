@@ -1,0 +1,21 @@
+.profile-row{
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem;
+}
+.profile-head{
+    color:#00f0ff;
+    font-size: 2rem;
+    font-weight: 500;
+}
+.input-title{
+    color:#00f0ff;
+}
+.input-text{
+    margin-bottom: 1rem;
+    border: 2px solid #00f0ff;
+}
+.profile-foot{
+    color:#00f0ff;
+}

@@ -10,7 +10,7 @@ const Chirp = ({ chirp }) => {
                     <div className="chirp-date">{chirp.date}</div>
                 </div>
                 <div className="chirp-text">{chirp.content}</div>
-                <span class="chirp-label">{chirp.id}</span>
+                <span className="chirp-label">{chirp.id}</span>
             </div>
         </div>
     );

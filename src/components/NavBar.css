@@ -1,0 +1,31 @@
+.navbar{
+    background-color:  #fcee09;
+    display: block;
+    color: #fcee09;
+    padding: 0;
+}
+li{
+    margin-right: 2rem;
+}
+ul{
+    margin-top: 0.5rem;
+    padding: 0;
+}
+a {
+    display: block;
+    padding: 8px;
+    font-size: 1.2rem;
+
+}
+a:hover{
+    color: #00f0ff;
+    text-decoration: none;
+}
+.nav-foot{
+    width: 100%;
+    position: relative;
+    bottom: -5px;
+}
+.active{
+    color: #050a0e;
+}

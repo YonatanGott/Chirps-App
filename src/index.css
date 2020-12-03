@@ -9,8 +9,14 @@ body {
 }
 .App{
   align-self: center;
-  width: 600px;
+  align-items: center;
 }
+.navbar{
+  background-color:  #fcee09;
+  display: block;
+  color: #fcee09;
+}
+
 @keyframes glitch-animation {
   0% {
     opacity: 1;
