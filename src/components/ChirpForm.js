@@ -1,23 +1,16 @@
-import React, { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import React, { useState, useContext } from "react";
 import "./ChirpForm.css";
-import { postChirp } from "../lib/api";
+import { ChirpContext } from "../contexts/ChirpContext";
+
 
 const ChirpForm = () => {
     const [content, setContent] = useState("");
     const [chirpBtn, setChirpBtn] = useState(false);
+    const { addChirp } = useContext(ChirpContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const chirp = {
-            content: content,
-            userName: "Yonatan",
-            date: new Date().toISOString(),
-            id: uuidv4(),
-        };
-        postChirp(chirp)
-            .then((response) => console.log(response))
-            .catch(() => alert("Server Problem"));
+        addChirp(content);
         setContent("");
     };
 
