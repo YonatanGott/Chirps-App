@@ -12,8 +12,8 @@ const Navbar = () => {
                 <nav className="navbar navbar-default">
                     <div className="container-fluid">
                         <ul className="nav nav-list">
-                            <li className="active"><Link to="/">Home</Link></li>
-                            <li><Link to="/Profile">Profile</Link></li>
+                            <li className="nav-link"><Link to="/">Home</Link></li>
+                            <li className="nav-link"><Link to="/Profile">Profile</Link></li>
                         </ul>
                     </div>
                 </nav>

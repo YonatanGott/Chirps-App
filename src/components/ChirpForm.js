@@ -38,7 +38,7 @@ const ChirpForm = () => {
                 <div className="overflow">
                     {chirpBtn ? (
                         <div className="btn text-overflow_btn">
-                            <span className="text-overflow btn__content">
+                            <span className="text-overflow">
                                 _The Chirp can't contain more than 140 char.
                             </span>
                         </div>

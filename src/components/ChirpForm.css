@@ -37,11 +37,9 @@ textarea::placeholder, .form-control::-webkit-input-placeholder  {
 .btn__content:hover{
   background-color: #00f0ff;
   animation: glitch-animation 2s linear 0s infinite;
-
 }
-.btn:disabled{
+.btn:disabled {
   cursor: default;
-  animation: none;
 }
 .btn__content {
   display: flex;
@@ -56,8 +54,8 @@ textarea::placeholder, .form-control::-webkit-input-placeholder  {
   clip-path: polygon(92% 0, 100% 25%, 100% 100%, 8% 100%, 0% 75%, 0 0);
 }
 .text-overflow_btn {
-  width: 338px;
-  height: 29px;
+  width: 350px;
+  height: 39px;
   font-size: 0.85rem;
   clip-path: polygon(
     20% 0%,
@@ -71,6 +69,14 @@ textarea::placeholder, .form-control::-webkit-input-placeholder  {
   );
 }
 .text-overflow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
   clip-path: polygon(
     20% 0%,
     91% 0,
