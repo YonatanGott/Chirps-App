@@ -2,8 +2,10 @@ import React, { useState, useContext } from 'react';
 import { ChirpContext } from "../contexts/ChirpContext";
 import './Profile.css';
 import { AuthContext } from '../contexts/AuthContext';
-import storage from '../firebase/firebase';
+import { storage } from '../firebase/firebase';
 import Avatar from '../pics/profile.png';
+import 'firebase/storage';
+
 
 const Profile = () => {
     const { addUserName } = useContext(ChirpContext);
@@ -11,30 +13,24 @@ const Profile = () => {
     const { currentUser } = useContext(AuthContext);
     const [userName, setUserName] = useState(currentUser.email);
     const [profilePic, setProfilePic] = useState('');
+    const [imageUrl, setImageUrl] = useState(null);
 
     const handleChangeUser = event => {
         setUserName(event.target.value);
     };
 
-    const handleSubmit = event => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         if (userName.trim() === '') {
             alert('Cannot Add a Blank User Name');
         } else {
             addUserName(userName);
-            const uploadTask = storage.ref(`/images/${profilePic.name}`).put(profilePic)
-            //initiates the firebase side uploading 
-            uploadTask.on('state_changed',
-                (snapShot) => {
-                    //takes a snap shot of the process as it is happening
-                    console.log(snapShot)
-                }, (err) => {
-                    //catches the errors
-                    console.log(err)
-                })
+            await storage.ref(`/images/${profilePic.name}`).put(profilePic);
+            setImageUrl(await storage.ref('images').child(profilePic.name).getDownloadURL());
         }
     setProfile(true);
     };
+
 
 
 const handleChangePic = (e) => {
@@ -57,10 +53,7 @@ return (
                         value={userName}
                     />
                     <p className='input-title'>Profile_Image</p>
-                    
-                        <input type="file" accept='image/*' className="file-input form-control" onChange={handleChangePic} />
-                        
-              
+                    <input type="file" accept='image/*' className="file-input form-control" onChange={handleChangePic} />
                     <button className="btn profile-btn" id="btn" type="submit">
                         <span className="btn__content">Save_</span>
                     </button>
@@ -75,7 +68,7 @@ return (
                             </div>
                             <div>
                                 <span className="pic-foot">
-                                    Your Profile Picture_ <img className='profile-pic' src={Avatar} alt='Woooooo...' />
+                                    Your Profile Picture_ <img className='profile-pic' alt={Avatar} src={imageUrl}  />
 
                                 </span>
                             </div>

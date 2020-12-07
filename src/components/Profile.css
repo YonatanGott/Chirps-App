@@ -31,3 +31,7 @@
 .profile-btn{
     margin-top: 2rem;
 }
+.profile-pic{
+    max-width: 3rem;
+    max-height: 3rem;
+}
