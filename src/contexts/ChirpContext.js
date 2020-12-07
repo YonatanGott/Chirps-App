@@ -10,7 +10,6 @@ const ChirpContextProvider = (props) => {
     const [fireChirps, setFireChirps] = useState([]);
     const { currentUser } = useContext(AuthContext);
     const [userName, setUserName] = useState(currentUser ? currentUser.email : 'Chirpy Chirp');
-    const [lastVisible, setLastVisible] = useState(null);
 
     const addUserName = (userName) => {
         setUserName(userName);
@@ -22,13 +21,7 @@ const ChirpContextProvider = (props) => {
         .firestore()
         .collection('chirps')
         .orderBy('date', "desc");
-
-        ref.limit(6).get().then(function (documentSnapshots) {
-        setLastVisible (documentSnapshots.docs[documentSnapshots.docs.length-1])
-        });
         const unsubscribe = ref
-            .startAfter(lastVisible)
-            .limit(6)
             .onSnapshot((snapshot) => {
                 const arr = snapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -38,7 +31,7 @@ const ChirpContextProvider = (props) => {
             }, err => console.log(err.message));
         setLoader(false);
         return () => unsubscribe()
-    }, [lastVisible]);
+    }, []);
 
     useEffect(() => {
         fetchChirps();

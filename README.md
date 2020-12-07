@@ -9,4 +9,4 @@ And Tweet usually implies the monosyllabic note of a very small bird or the call
 
 ## Deployed on Firebase
 
-https://cyberpunk-chirp.web.app/
+https://cyberpunk-chirps.web.app/
