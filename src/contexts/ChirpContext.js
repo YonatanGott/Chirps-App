@@ -1,49 +1,51 @@
-import React, { createContext, useState, useEffect, useCallback } from "react";
-import { getChirps, postChirp } from '../lib/api';
-import { v4 as uuidv4 } from "uuid";
+import React, { createContext, useState, useContext, useEffect, useCallback } from "react";
+import firebase from '../firebase/firebase';
+import { AuthContext } from '../contexts/AuthContext';
+
 
 export const ChirpContext = createContext();
 
 const ChirpContextProvider = (props) => {
-    const [chirps, setChirps] = useState([]);
-    const [userName, setUserName] = useState('Chirpy Chirp McChirpen');
     const [loader, setLoader] = useState(false);
-
-    const fetchChirps = useCallback (async () => {
-        setLoader(true);
-        const response = await getChirps();
-        const chirps = await response.data.tweets;
-        setChirps(chirps);
-        setLoader(false);
-    },[]);
-
-    useEffect(() => {
-        fetchChirps();
-        setInterval(fetchChirps, 40000);
-    }, [fetchChirps]);
+    const [fireChirps, setFireChirps] = useState([]);
+    const { currentUser } = useContext(AuthContext);
+    const [userName, setUserName] = useState(currentUser ? currentUser.email : 'Chirpy Chirp');
+    const [lastVisible, setLastVisible] = useState(null);
 
     const addUserName = (userName) => {
         setUserName(userName);
     }
 
-    const addChirp = (content) => {
-        const chirp = {
-            content: content,
-            userName: userName,
-            date: new Date().toISOString(),
-            id: uuidv4(),
-        };
-        setChirps([
-            chirp,
-            ...chirps,
-        ]);
-        postChirp(chirp)
-            .then((response) => console.log(response))
-            .catch(() => alert("Server Problem"));
-    };
+    const fetchChirps = useCallback(async () => {
+        setLoader(true);
+        const ref = firebase
+        .firestore()
+        .collection('chirps')
+        .orderBy('date', "desc");
+
+        ref.limit(6).get().then(function (documentSnapshots) {
+        setLastVisible (documentSnapshots.docs[documentSnapshots.docs.length-1])
+        });
+        const unsubscribe = ref
+            .startAfter(lastVisible)
+            .limit(6)
+            .onSnapshot((snapshot) => {
+                const arr = snapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data()
+                }))
+                setFireChirps(arr)
+            }, err => console.log(err.message));
+        setLoader(false);
+        return () => unsubscribe()
+    }, [lastVisible]);
+
+    useEffect(() => {
+        fetchChirps();
+    }, [fetchChirps]);
 
     return (
-        <ChirpContext.Provider value={{ chirps, loader, addChirp, addUserName }}>
+        <ChirpContext.Provider value={{ fireChirps, loader, userName, addUserName }}>
             {props.children}
         </ChirpContext.Provider>
     );

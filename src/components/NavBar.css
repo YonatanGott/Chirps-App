@@ -25,4 +25,11 @@ a:hover{
     width: 100%;
     position: relative;
     bottom: -5px;
+    color:  #050a0e;
+}
+.logout-btn{
+    background-color: #050a0e;
+}
+.logout:hover{
+    animation: none;
 }

@@ -4,11 +4,11 @@ import "./ChirpList.css";
 import { ChirpContext } from '../contexts/ChirpContext';
 
 const ChirpList = () => {
-    const { chirps, loader } = useContext(ChirpContext);
+    const { fireChirps, loader } = useContext(ChirpContext);
     return (
         <div className="chirp-list row">
             <div className='col-lg chirp-list-col'>
-                {chirps.map((chirp) => {
+                {fireChirps.map((chirp) => {
                     return <Chirp chirp={chirp} key={chirp.id} />;
                 })}
                 <div>

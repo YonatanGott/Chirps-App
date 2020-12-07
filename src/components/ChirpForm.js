@@ -1,17 +1,29 @@
-import React, { useState, useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./ChirpForm.css";
-import { ChirpContext } from "../contexts/ChirpContext";
+import firebase from '../firebase/firebase';
+import { ChirpContext } from '../contexts/ChirpContext';
+import SignUp from './SignUp';
+import { auth } from '../firebase/firebase';
 
 
 const ChirpForm = () => {
     const [content, setContent] = useState("");
     const [chirpBtn, setChirpBtn] = useState(false);
-    const { addChirp } = useContext(ChirpContext);
+    const { userName } = useContext(ChirpContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        addChirp(content);
-        setContent("");
+        firebase
+        .firestore()
+        .collection('chirps')
+        .add({
+            content: content,
+            userName: userName,
+            date: new Date().toISOString(),
+        })
+        .then( () =>{
+            setContent("")
+        })
     };
 
     const handleChange = (e) => {
@@ -23,6 +35,16 @@ const ChirpForm = () => {
         }
     };
 
+        const [signedIn, setSignedIn] = useState(false)
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                setSignedIn(true);
+            } else {
+                setSignedIn(false)
+            }
+        });
+
+    if (signedIn) {    
     return (
         <form className="form-group chirp-form" onSubmit={handleSubmit}>
             <textarea
@@ -53,7 +75,12 @@ const ChirpForm = () => {
                 </div>
             </div>
         </form>
-    );
+    );}
+    else{
+        return (
+            <SignUp />
+        )
+    }
 };
 
 export default ChirpForm;
