@@ -10,7 +10,6 @@ body {
 .App{
   align-self: center;
   align-items: center;
-  max-height: 80%;
 }
 .container-lg::-webkit-scrollbar {
   display: none;

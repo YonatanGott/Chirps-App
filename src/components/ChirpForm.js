@@ -9,21 +9,27 @@ import { auth } from '../firebase/firebase';
 const ChirpForm = () => {
     const [content, setContent] = useState("");
     const [chirpBtn, setChirpBtn] = useState(false);
-    const { userName } = useContext(ChirpContext);
+    const { userName, userPic } = useContext(ChirpContext);
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if (!content) {
+            return;
+        }
+        let strDate = new Date().toISOString();
+        let chirpDate = strDate.split('T').join(' ');
         firebase
-        .firestore()
-        .collection('chirps')
-        .add({
-            content: content,
-            userName: userName,
-            date: new Date().toISOString(),
-        })
-        .then( () =>{
-            setContent("")
-        })
+            .firestore()
+            .collection('chirps')
+            .add({
+                content: content,
+                userName: userName,
+                userPic: userPic,
+                date: chirpDate,
+            })
+            .then(() => {
+                setContent("")
+            })
     };
 
     const handleChange = (e) => {
@@ -35,48 +41,50 @@ const ChirpForm = () => {
         }
     };
 
-        const [signedIn, setSignedIn] = useState(false)
-        auth.onAuthStateChanged(user => {
-            if (user) {
-                setSignedIn(true);
-            } else {
-                setSignedIn(false)
-            }
-        });
+    const [signedIn, setSignedIn] = useState(false)
+    auth.onAuthStateChanged(user => {
+        if (user) {
+            setSignedIn(true);
+        } else {
+            setSignedIn(false)
+        }
+    });
 
-    if (signedIn) {    
-    return (
-        <form className="form-group chirp-form" onSubmit={handleSubmit}>
-            <textarea
-                className="form-control input-text"
-                rows="5"
-                cols="30"
-                type="text"
-                placeholder="What you have in mind..."
-                value={content}
-                onChange={handleChange}
-            />
-            <div className="form-footer">
-                <div className="overflow">
-                    {chirpBtn ? (
-                        <div className="btn text-overflow_btn">
-                            <span className="text-overflow">
-                                _The Chirp can't contain more than 140 char.
+
+    if (signedIn) {
+        return (
+            <form className="form-group chirp-form" onSubmit={handleSubmit}>
+                <textarea
+                    className="form-control input-text"
+                    rows="5"
+                    cols="30"
+                    type="text"
+                    placeholder="What you have in mind..."
+                    value={content}
+                    onChange={handleChange}
+                />
+                <div className="form-footer">
+                    <div className="overflow">
+                        {chirpBtn ? (
+                            <div className="btn text-overflow_btn">
+                                <span className="text-overflow">
+                                    _The Chirp can't contain more than 140 char.
                             </span>
-                        </div>
-                    ) : (
-                            ""
-                        )}
+                            </div>
+                        ) : (
+                                ""
+                            )}
+                    </div>
+                    <div className="chirp-btn">
+                        <button className="btn" id="btn" type="submit" disabled={chirpBtn}>
+                            <span className="btn__content">Chirp_</span>
+                        </button>
+                    </div>
                 </div>
-                <div className="chirp-btn">
-                    <button className="btn" id="btn" type="submit" disabled={chirpBtn}>
-                        <span className="btn__content">Chirp_</span>
-                    </button>
-                </div>
-            </div>
-        </form>
-    );}
-    else{
+            </form>
+        );
+    }
+    else {
         return (
             <SignUp />
         )

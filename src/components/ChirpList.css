@@ -29,6 +29,7 @@
 .chirp-list{
   margin-left: auto;
   margin-right: auto;
+  padding: 0;
 }
 .chirp-list-col{
   margin-left: auto;

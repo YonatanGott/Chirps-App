@@ -1,6 +1,8 @@
 import React from "react";
 import "./Chirp.css";
 
+
+
 const Chirp = ({ chirp }) => {
     return (
         <div className="row chirp-list-row">

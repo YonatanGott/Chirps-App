@@ -1,6 +1,7 @@
 import React, { useRef, useState, useContext } from "react"
 import { AuthContext } from "../contexts/AuthContext"
 import { Link, useHistory } from "react-router-dom"
+import firebase, { auth } from "../firebase/firebase"
 import './Sign.css'
 
 export default function SignUp() {
@@ -28,6 +29,17 @@ export default function SignUp() {
         }
         setLoading(false)
     }
+
+    
+    const googleProvider = new firebase.auth.GoogleAuthProvider()
+    const signInWithGoogle = () => {
+        auth.signInWithPopup(googleProvider).then((res) => {
+            console.log(res.user)
+        }).catch((error) => {
+            console.log(error.message)
+        }).then( history.push("/") )
+    }
+
 
     return (
 
@@ -57,6 +69,12 @@ export default function SignUp() {
             </div>
             <div className="w-100 text-center mt-2 sign-foot">
                 Have an account? <Link to="/signIn">Sign In</Link>
+            </div>
+            <div className="google-btn w-100 text-center mt-2">
+                <button className="login-google " onClick={signInWithGoogle}>
+                    <img src="https://img.icons8.com/ios-filled/50/000000/google-logo.png" alt="google icon" />
+                    <span className="google-content"> Sign up with Google</span>
+                </button>
             </div>
         </div>
 
